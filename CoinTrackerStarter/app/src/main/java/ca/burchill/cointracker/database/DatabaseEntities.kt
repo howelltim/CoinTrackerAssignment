@@ -39,7 +39,7 @@ data class DatabaseCoin constructor(
 
 
 /**
- * Map DatabaseVideos to domain entities
+ * Map DatabaseCoins to domain entities
  */
 fun List<DatabaseCoin>.asDomainModel(): List<Coin> {
     return map {

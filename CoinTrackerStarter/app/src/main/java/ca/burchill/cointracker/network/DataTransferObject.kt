@@ -1,5 +1,6 @@
 package ca.burchill.cointracker.network
 
+import ca.burchill.cointracker.database.DatabaseCoin
 import ca.burchill.cointracker.domain.Coin
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
@@ -88,13 +89,9 @@ data class NetworkUSD(
 @JsonClass(generateAdapter = true)
 data class NetworkCoinContainer(val status: NetworkStatus, val coins: List<NetworkCoin>)
 
-
-/**
- * Convert Network results to Domain objects
- */
-fun NetworkCoinContainer.asDomainModel(): List<Coin> {
+fun CoinApiResponse.asDatabaseModel(): List<DatabaseCoin> {
     return coins.map {
-        Coin(
+        DatabaseCoin(
             circulating_supply = it.circulating_supply,
             cmcRank = it.cmcRank,
             date_added = it.date_added,
@@ -118,4 +115,3 @@ fun NetworkCoinContainer.asDomainModel(): List<Coin> {
         )
     }
 }
-
