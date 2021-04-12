@@ -2,6 +2,7 @@ package ca.burchill.cointracker.viewModels
 
 import android.app.Application
 import androidx.lifecycle.*
+import ca.burchill.cointracker.database.DatabaseCoin
 import ca.burchill.cointracker.network.CoinApi
 import ca.burchill.cointracker.network.NetworkCoin
 import ca.burchill.cointracker.repository.CoinsRepository
@@ -25,6 +26,10 @@ class CoinListViewModel(application: Application) : AndroidViewModel(application
     val status: LiveData<CoinApiStatus>
         get() = _status
 
+//     val coins = coinsRepository.coins
+//     Tried implementing the above over the below but theres a type mismatch
+//     The Observer in the fragment needs a NetworkCoin instead of a Coin
+    
     private val _coins = MutableLiveData<List<NetworkCoin>>()
     val coins: LiveData<List<NetworkCoin>>
         get() = _coins
@@ -38,11 +43,18 @@ class CoinListViewModel(application: Application) : AndroidViewModel(application
     }
 
     private fun refreshDataFromRepository() {
-       coroutineScope.launch {
+        coroutineScope.launch {
             try {
-                coinsRepository.refreshCoins()
+//                coinsRepository.refreshCoins()
+//                Tried implementing the above over the below but theres a type mismatch
+//                The Observer in the fragment needs a NetworkCoin instead of a Coin
+
+                var coinResult = CoinApi.retrofitService.getCoins()
+                if (coinResult.coins.size > 0) {
+                    _coins.value = coinResult.coins
+                }
             } catch (t: Throwable) {
-                if(coins.value.isNullOrEmpty())
+                if (coins.value.isNullOrEmpty())
                     _status.value = CoinApiStatus.ERROR
             }
         }

@@ -28,8 +28,6 @@ data class NetworkCoin(
     val symbol: String,
     val tags: List<String>,
     val total_supply: Double
-
-
 ) {
     override fun equals(other: Any?) =
         other is NetworkCoin && id == other.id && quote == other.quote

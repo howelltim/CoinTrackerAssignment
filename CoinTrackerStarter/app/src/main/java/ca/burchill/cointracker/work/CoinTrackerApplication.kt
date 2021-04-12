@@ -20,6 +20,7 @@ class CoinTrackerApplication : Application() {
         val constraints = Constraints.Builder()
             .setRequiredNetworkType(NetworkType.UNMETERED)
             .build()
+
         val repeatingRequest = PeriodicWorkRequestBuilder<RefreshDataWorker>(15, TimeUnit.MINUTES)
             .setConstraints(constraints)
             .build()

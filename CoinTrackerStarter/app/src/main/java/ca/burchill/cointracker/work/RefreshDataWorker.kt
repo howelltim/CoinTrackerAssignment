@@ -24,7 +24,6 @@ class RefreshDataWorker(appContext: Context, params: WorkerParameters) :
         } catch (e: HttpException) {
             return Result.retry()
         }
-
         return Result.success()
     }
 }
